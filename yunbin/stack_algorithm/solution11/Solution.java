@@ -1,5 +1,7 @@
+package stack_algorithm.solution11;
+
 import java.util.ArrayDeque;
-class Solution11
+class Solution
 {
     public int solution(String s)
     {

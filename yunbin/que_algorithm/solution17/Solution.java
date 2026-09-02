@@ -1,3 +1,5 @@
+package que_algorithm.solution17;
+
 import java.util.*;
 class Solution {
     public String solution(String[] cards1, String[] cards2, String[] goal) {

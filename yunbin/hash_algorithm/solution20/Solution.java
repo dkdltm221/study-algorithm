@@ -1,3 +1,5 @@
+package hash_algorithm.solution20;
+
 import java.util.*;
 class Solution {
     public int solution(String[] want, int[] number, String[] discount) {

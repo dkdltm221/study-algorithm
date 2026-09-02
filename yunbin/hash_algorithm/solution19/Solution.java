@@ -1,3 +1,5 @@
+package hash_algorithm.solution19;
+
 import java.util.*;
 class Solution {
     public String solution(String[] participant, String[] completion) {

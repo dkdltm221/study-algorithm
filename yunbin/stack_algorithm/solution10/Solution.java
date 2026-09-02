@@ -1,5 +1,13 @@
+package stack_algorithm.solution10;
+
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Stack;
+import java.util.ArrayDeque;
+import java.util.HashMap;
+
 //내가 푼문제
-public class Solution10 {
+public class Solution {
     public int solution(String s) {
         int answer = 0;
         Queue<Character> que = new LinkedList<>();
@@ -43,9 +51,9 @@ public class Solution10 {
 
     public static int solution1(String s) {
         HashMap<Character,Character> map = new HashMap<>();
-        map.put(')'.'(');
-        map.put('}'.'{');
-        map.put(']'.'[');
+        map.put(')', '(');
+        map.put('}', '{');
+        map.put(']', '[');
         int n = s.length();
         s+= s;
         int answer = 0;

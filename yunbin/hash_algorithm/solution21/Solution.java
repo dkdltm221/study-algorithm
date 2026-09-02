@@ -1,3 +1,5 @@
+package hash_algorithm.solution21;
+
 import java.util.*;
 class Solution {
     public String[] solution(String[] record) {

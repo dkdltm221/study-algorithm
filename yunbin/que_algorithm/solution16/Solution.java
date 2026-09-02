@@ -1,3 +1,5 @@
+package que_algorithm.solution16;
+
 import java.util.*;
 class Solution {
     public int[] solution(int[] progresses, int[] speeds) {

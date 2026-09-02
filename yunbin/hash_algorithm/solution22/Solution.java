@@ -1,3 +1,5 @@
+package hash_algorithm.solution22;
+
 import java.util.*;
 // 진짜 대가리 터지는줄;;; 노가다 성으로 풀순있는데 어떻게 효율적으로 짤가 고민하다보니 시간이 훌쩍간다.;;
 

@@ -52,16 +52,16 @@ jobs:
           {
             echo "## 알고리즘 풀이 기록 ($date_prev_kst)"
             echo
-            echo "백준허브가 `main`에 자동 업로드한 풀이를 기록용 `reviewed` 브랜치에 반영하는 PR입니다."
+            echo '백준허브가 `main`에 자동 업로드한 풀이를 기록용 `reviewed` 브랜치에 반영하는 PR입니다.'
             echo
             echo "- 생성일 (KST): $date_kst"
             echo "- 미반영 커밋 수: $count"
-            echo "- 비교: `main` → `reviewed`"
+            echo '- 비교: `main` → `reviewed`'
             echo
             echo "### 포함된 커밋"
             echo "$commits"
             echo
-            echo "> PR을 Merge하면 `reviewed`에 기록됩니다. 백준허브의 `main` 자동 업로드는 그대로 유지됩니다."
+            echo '> PR을 Merge하면 `reviewed`에 기록됩니다. 백준허브의 `main` 자동 업로드는 그대로 유지됩니다.'
           } > /tmp/daily-pr-body.md
 
           gh pr create \

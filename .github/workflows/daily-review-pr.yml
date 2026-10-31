@@ -1,0 +1,71 @@
+name: Daily algorithm review PR
+
+on:
+  schedule:
+    # 00:05 Asia/Seoul (15:05 UTC on the previous day)
+    - cron: '5 15 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pull-requests: write
+
+concurrency:
+  group: daily-algorithm-review
+  cancel-in-progress: false
+
+jobs:
+  create-daily-review:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out all commit history
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Create daily review pull request
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch origin main reviewed
+
+          # A review PR only makes sense if new commits were uploaded.
+          if git merge-base --is-ancestor origin/main origin/reviewed; then
+            echo "No new solution commits to review."
+            exit 0
+          fi
+
+          # Keep a single open PR; new BaekjoonHub commits are added to it.
+          existing="$(gh pr list --state open --base reviewed --head main --json number --jq '.[0].number // empty')"
+          if [[ -n "$existing" ]]; then
+            echo "Review PR #$existing is already open; new commits are included automatically."
+            exit 0
+          fi
+
+          date_kst="$(TZ=Asia/Seoul date +%F)"
+          date_prev_kst="$(TZ=Asia/Seoul date -d 'yesterday' +%F)"
+          commits="$(git log --no-merges --format='- %s' origin/reviewed..origin/main)"
+          count="$(git rev-list --count origin/reviewed..origin/main)"
+          {
+            echo "## 알고리즘 풀이 기록 ($date_prev_kst)"
+            echo
+            echo "백준허브가 `main`에 자동 업로드한 풀이를 기록용 `reviewed` 브랜치에 반영하는 PR입니다."
+            echo
+            echo "- 생성일 (KST): $date_kst"
+            echo "- 미반영 커밋 수: $count"
+            echo "- 비교: `main` → `reviewed`"
+            echo
+            echo "### 포함된 커밋"
+            echo "$commits"
+            echo
+            echo "> PR을 Merge하면 `reviewed`에 기록됩니다. 백준허브의 `main` 자동 업로드는 그대로 유지됩니다."
+          } > /tmp/daily-pr-body.md
+
+          gh pr create \
+            --base reviewed \
+            --head main \
+            --title "[Algorithm] $date_prev_kst 풀이 기록" \
+            --body-file /tmp/daily-pr-body.md

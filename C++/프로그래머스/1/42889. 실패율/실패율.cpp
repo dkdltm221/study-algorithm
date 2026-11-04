@@ -6,7 +6,7 @@ using namespace std;
 
 vector<int> solution(int N, vector<int> stages) {
     vector<int> answer;
-    map<int, double> result;
+    vector<pair<int,double>> result;
 
     for (int i = 1; i <= N; i++) {
         int n = 0;
@@ -16,20 +16,20 @@ vector<int> solution(int N, vector<int> stages) {
             if (stages[j] >= i) n++;
             if (stages[j] == i) m++;
         }
-
-        result[i] = (n == 0) ? 0.0 : (double)m / n;
+        double failRate = (n == 0) ? 0.0 : (double)m / n;
+        result.push_back({i,failRate});
     }
 
-    vector<pair<int, double>> v(result.begin(), result.end());
+    
 
-    sort(v.begin(), v.end(), [](const auto& a, const auto& b) {
+    sort(result.begin(), result.end(), [](const auto& a, const auto& b) {
         if (a.second == b.second)
             return a.first < b.first;
 
         return a.second > b.second;
     });
 
-    for (const auto& p : v) {
+    for (const auto& p : result) {
         answer.push_back(p.first);
     }
 

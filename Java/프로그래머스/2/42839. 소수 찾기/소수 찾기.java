@@ -7,8 +7,7 @@ class Solution {
     private static void dfs(String n){
         
         if (!n.isEmpty()){
-            if(n.charAt(0)=='0')
-                return;
+            
             int number = Integer.parseInt(n);
             if (isPrime(number)){
                 cnt.add(number);
